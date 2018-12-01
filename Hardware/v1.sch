@@ -567,7 +567,7 @@
 <wire x1="-8.1625" y1="0" x2="-8.1625" y2="-6" width="0.127" layer="51"/>
 <wire x1="-8.1625" y1="-6" x2="8.1625" y2="-6" width="0.127" layer="51"/>
 <wire x1="8.1625" y1="-6" x2="8.1625" y2="0" width="0.127" layer="51"/>
-<text x="19.39" y="5.54" size="1.778" layer="51" font="vector" rot="R90" align="center">&gt;NAME</text>
+<text x="18.12" y="5.54" size="1.778" layer="25" font="vector" rot="R90" align="center">&gt;NAME</text>
 </package>
 <package name="CONN_TE_DE-HD15">
 <pad name="13" x="0" y="8.89" drill="0.8"/>
@@ -596,7 +596,7 @@
 <wire x1="-8.15" y1="0" x2="-8.15" y2="-6" width="0.127" layer="51"/>
 <wire x1="-8.15" y1="-6" x2="8.15" y2="-6" width="0.127" layer="51"/>
 <wire x1="8.15" y1="-6" x2="8.15" y2="0" width="0.127" layer="51"/>
-<text x="18.5" y="7.4" size="1.778" layer="51" font="vector" rot="R90" align="center">&gt;NAME</text>
+<text x="18.5" y="7.4" size="1.778" layer="25" font="vector" rot="R90" align="center">&gt;NAME</text>
 </package>
 <package name="UQFN6">
 <smd name="5" x="0" y="0.475" dx="0.25" dy="0.65" layer="1"/>
@@ -5538,8 +5538,8 @@ Source: http://www.mouser.com/ds/2/392/products_18-2245.pdf</description>
 <wire x1="-1.173" y1="-0.583" x2="-1.173" y2="0.583" width="0.0508" layer="39"/>
 <smd name="1" x="-0.65" y="0" dx="0.7" dy="0.9" layer="1"/>
 <smd name="2" x="0.65" y="0" dx="0.7" dy="0.9" layer="1"/>
-<text x="0" y="1.4" size="1.27" layer="25" font="vector" align="center">&gt;NAME</text>
-<text x="0" y="-1.4" size="1.27" layer="27" font="vector" align="center">&gt;VALUE</text>
+<text x="0" y="1.4" size="1.016" layer="25" font="vector" align="center">&gt;NAME</text>
+<text x="0" y="-1.4" size="1.016" layer="27" font="vector" align="center">&gt;VALUE</text>
 <rectangle x1="-0.554" y1="-0.3048" x2="-0.254" y2="0.2951" layer="51"/>
 <rectangle x1="0.2588" y1="-0.3048" x2="0.5588" y2="0.2951" layer="51"/>
 <rectangle x1="-0.1999" y1="-0.3" x2="0.1999" y2="0.3" layer="35"/>
