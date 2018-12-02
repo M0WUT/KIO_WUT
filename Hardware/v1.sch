@@ -7890,7 +7890,7 @@ SINGLE-ENDED ANALOG INPUT/OUTPUT AND S/PDIF</description>
 <part name="FRAME5" library="frames" deviceset="A4L-LOC" device=""/>
 <part name="FRAME6" library="frames" deviceset="A4L-LOC" device=""/>
 <part name="IC6" library="texas" deviceset="PCM290*" device="" technology="2E" value="PCM2903C"/>
-<part name="C25" library="rcl" deviceset="C-EU" device="C0402" value="100nF"/>
+<part name="C25" library="rcl" deviceset="C-EU" device="C0402" value="1uF"/>
 <part name="P+7" library="supply1" deviceset="+5V" device=""/>
 <part name="GND13" library="supply1" deviceset="GND" device=""/>
 <part name="IC4" library="ftdichip-3" deviceset="FT2232D" device=""/>
@@ -7926,14 +7926,17 @@ SINGLE-ENDED ANALOG INPUT/OUTPUT AND S/PDIF</description>
 <part name="R28" library="rcl" deviceset="R-EU_" device="R0805" value="220"/>
 <part name="R29" library="rcl" deviceset="R-EU_" device="R0805" value="137k"/>
 <part name="L1" library="m0wut" deviceset="INDUCTOR" device="" value="100uH"/>
-<part name="C29" library="rcl" deviceset="C-EU" device="C0402" value="100nF"/>
-<part name="C30" library="rcl" deviceset="C-EU" device="C0402" value="1uF"/>
+<part name="C30" library="rcl" deviceset="C-EU" device="C0402" value="100nF"/>
 <part name="RN1" library="m0wut" deviceset="R_BOURNS_CAY16-J4" device="" value="2k2"/>
 <part name="P+8" library="supply1" deviceset="+5V" device=""/>
-<part name="R8" library="rcl" deviceset="R-EU_" device="R0603" value="69k8"/>
-<part name="R9" library="rcl" deviceset="R-EU_" device="R0603" value="100k"/>
+<part name="R8" library="rcl" deviceset="R-EU_" device="R0402" value="69k8"/>
+<part name="R9" library="rcl" deviceset="R-EU_" device="R0402" value="100k"/>
 <part name="GND19" library="supply1" deviceset="GND" device=""/>
 <part name="P+10" library="supply1" deviceset="+5V" device=""/>
+<part name="C31" library="rcl" deviceset="C-EU" device="C0402" value="1uF"/>
+<part name="C32" library="rcl" deviceset="C-EU" device="C0402" value="100nF"/>
+<part name="GND17" library="supply1" deviceset="GND" device=""/>
+<part name="C29" library="rcl" deviceset="C-EU" device="C0402" value="100nF"/>
 </parts>
 <sheets>
 <sheet>
@@ -8479,8 +8482,8 @@ SINGLE-ENDED ANALOG INPUT/OUTPUT AND S/PDIF</description>
 <instance part="GND18" gate="1" x="81.28" y="53.34"/>
 <instance part="VDD1" gate="G$1" x="147.32" y="149.86"/>
 <instance part="VDD2" gate="G$1" x="83.82" y="111.76"/>
-<instance part="C29" gate="G$1" x="231.14" y="106.68"/>
-<instance part="C30" gate="G$1" x="243.84" y="106.68"/>
+<instance part="C30" gate="G$1" x="231.14" y="106.68"/>
+<instance part="C29" gate="G$1" x="208.28" y="106.68"/>
 </instances>
 <busses>
 </busses>
@@ -8491,11 +8494,10 @@ SINGLE-ENDED ANALOG INPUT/OUTPUT AND S/PDIF</description>
 <pinref part="GND13" gate="1" pin="GND"/>
 <wire x1="218.44" y1="99.06" x2="218.44" y2="101.6" width="0.1524" layer="91"/>
 <pinref part="C30" gate="G$1" pin="2"/>
-<pinref part="C29" gate="G$1" pin="2"/>
-<wire x1="243.84" y1="101.6" x2="231.14" y2="101.6" width="0.1524" layer="91"/>
 <wire x1="231.14" y1="101.6" x2="218.44" y2="101.6" width="0.1524" layer="91"/>
-<junction x="231.14" y="101.6"/>
 <junction x="218.44" y="101.6"/>
+<pinref part="C29" gate="G$1" pin="2"/>
+<wire x1="218.44" y1="101.6" x2="208.28" y2="101.6" width="0.1524" layer="91"/>
 </segment>
 <segment>
 <pinref part="IC4" gate="G$1" pin="AGND"/>
@@ -8540,12 +8542,11 @@ SINGLE-ENDED ANALOG INPUT/OUTPUT AND S/PDIF</description>
 <pinref part="P+7" gate="1" pin="+5V"/>
 <pinref part="C25" gate="G$1" pin="1"/>
 <wire x1="218.44" y1="109.22" x2="218.44" y2="111.76" width="0.1524" layer="91"/>
-<pinref part="C29" gate="G$1" pin="1"/>
-<wire x1="231.14" y1="109.22" x2="218.44" y2="109.22" width="0.1524" layer="91"/>
 <junction x="218.44" y="109.22"/>
 <pinref part="C30" gate="G$1" pin="1"/>
-<wire x1="231.14" y1="109.22" x2="243.84" y2="109.22" width="0.1524" layer="91"/>
-<junction x="231.14" y="109.22"/>
+<wire x1="218.44" y1="109.22" x2="231.14" y2="109.22" width="0.1524" layer="91"/>
+<pinref part="C29" gate="G$1" pin="1"/>
+<wire x1="218.44" y1="109.22" x2="208.28" y2="109.22" width="0.1524" layer="91"/>
 </segment>
 <segment>
 <pinref part="IC4" gate="G$1" pin="-RESET"/>
@@ -8929,10 +8930,13 @@ SINGLE-ENDED ANALOG INPUT/OUTPUT AND S/PDIF</description>
 </instance>
 <instance part="RN1" gate="G$1" x="99.06" y="104.14" rot="MR270"/>
 <instance part="P+8" gate="1" x="96.52" y="127"/>
-<instance part="R8" gate="G$1" x="63.5" y="58.42" rot="R90"/>
+<instance part="R8" gate="G$1" x="63.5" y="60.96" rot="R90"/>
 <instance part="R9" gate="G$1" x="63.5" y="45.72" rot="R90"/>
 <instance part="GND19" gate="1" x="63.5" y="35.56"/>
-<instance part="P+10" gate="1" x="63.5" y="68.58"/>
+<instance part="P+10" gate="1" x="63.5" y="71.12"/>
+<instance part="C31" gate="G$1" x="109.22" y="116.84"/>
+<instance part="C32" gate="G$1" x="119.38" y="116.84"/>
+<instance part="GND17" gate="1" x="114.3" y="104.14"/>
 </instances>
 <busses>
 </busses>
@@ -9181,6 +9185,17 @@ SINGLE-ENDED ANALOG INPUT/OUTPUT AND S/PDIF</description>
 <pinref part="GND19" gate="1" pin="GND"/>
 <wire x1="63.5" y1="40.64" x2="63.5" y2="38.1" width="0.1524" layer="91"/>
 </segment>
+<segment>
+<pinref part="C31" gate="G$1" pin="2"/>
+<wire x1="109.22" y1="111.76" x2="109.22" y2="109.22" width="0.1524" layer="91"/>
+<pinref part="C32" gate="G$1" pin="2"/>
+<wire x1="109.22" y1="109.22" x2="114.3" y2="109.22" width="0.1524" layer="91"/>
+<wire x1="114.3" y1="109.22" x2="119.38" y2="109.22" width="0.1524" layer="91"/>
+<wire x1="119.38" y1="109.22" x2="119.38" y2="111.76" width="0.1524" layer="91"/>
+<pinref part="GND17" gate="1" pin="GND"/>
+<wire x1="114.3" y1="106.68" x2="114.3" y2="109.22" width="0.1524" layer="91"/>
+<junction x="114.3" y="109.22"/>
+</segment>
 </net>
 <net name="232_COM" class="0">
 <segment>
@@ -9237,12 +9252,12 @@ SINGLE-ENDED ANALOG INPUT/OUTPUT AND S/PDIF</description>
 </segment>
 <segment>
 <pinref part="R27" gate="G$1" pin="1"/>
-<wire x1="104.14" y1="58.42" x2="99.06" y2="58.42" width="0.1524" layer="91"/>
 <label x="81.28" y="58.928" size="1.27" layer="95"/>
-<pinref part="RN1" gate="G$1" pin="3A"/>
-<wire x1="99.06" y1="58.42" x2="81.28" y2="58.42" width="0.1524" layer="91"/>
-<wire x1="99.06" y1="96.52" x2="99.06" y2="58.42" width="0.1524" layer="91"/>
-<junction x="99.06" y="58.42"/>
+<wire x1="104.14" y1="58.42" x2="93.98" y2="58.42" width="0.1524" layer="91"/>
+<pinref part="RN1" gate="G$1" pin="1A"/>
+<wire x1="93.98" y1="58.42" x2="81.28" y2="58.42" width="0.1524" layer="91"/>
+<wire x1="93.98" y1="96.52" x2="93.98" y2="58.42" width="0.1524" layer="91"/>
+<junction x="93.98" y="58.42"/>
 </segment>
 </net>
 <net name="ACC_BND3" class="0">
@@ -9253,12 +9268,12 @@ SINGLE-ENDED ANALOG INPUT/OUTPUT AND S/PDIF</description>
 </segment>
 <segment>
 <pinref part="R28" gate="G$1" pin="1"/>
-<wire x1="104.14" y1="55.88" x2="101.6" y2="55.88" width="0.1524" layer="91"/>
 <label x="81.28" y="56.388" size="1.27" layer="95"/>
-<pinref part="RN1" gate="G$1" pin="4A"/>
-<wire x1="101.6" y1="55.88" x2="81.28" y2="55.88" width="0.1524" layer="91"/>
-<wire x1="101.6" y1="96.52" x2="101.6" y2="55.88" width="0.1524" layer="91"/>
-<junction x="101.6" y="55.88"/>
+<wire x1="104.14" y1="55.88" x2="96.52" y2="55.88" width="0.1524" layer="91"/>
+<pinref part="RN1" gate="G$1" pin="2A"/>
+<wire x1="96.52" y1="55.88" x2="81.28" y2="55.88" width="0.1524" layer="91"/>
+<wire x1="96.52" y1="96.52" x2="96.52" y2="55.88" width="0.1524" layer="91"/>
+<junction x="96.52" y="55.88"/>
 </segment>
 </net>
 <net name="ACC_BND2" class="0">
@@ -9269,12 +9284,12 @@ SINGLE-ENDED ANALOG INPUT/OUTPUT AND S/PDIF</description>
 </segment>
 <segment>
 <pinref part="R24" gate="G$1" pin="1"/>
-<wire x1="104.14" y1="68.58" x2="96.52" y2="68.58" width="0.1524" layer="91"/>
 <label x="81.28" y="69.088" size="1.27" layer="95"/>
-<pinref part="RN1" gate="G$1" pin="2A"/>
-<wire x1="96.52" y1="68.58" x2="81.28" y2="68.58" width="0.1524" layer="91"/>
-<wire x1="96.52" y1="96.52" x2="96.52" y2="68.58" width="0.1524" layer="91"/>
-<junction x="96.52" y="68.58"/>
+<wire x1="104.14" y1="68.58" x2="99.06" y2="68.58" width="0.1524" layer="91"/>
+<pinref part="RN1" gate="G$1" pin="3A"/>
+<wire x1="99.06" y1="68.58" x2="81.28" y2="68.58" width="0.1524" layer="91"/>
+<wire x1="99.06" y1="96.52" x2="99.06" y2="68.58" width="0.1524" layer="91"/>
+<junction x="99.06" y="68.58"/>
 </segment>
 </net>
 <net name="ACC_KEY" class="0">
@@ -9315,6 +9330,8 @@ SINGLE-ENDED ANALOG INPUT/OUTPUT AND S/PDIF</description>
 <wire x1="63.5" y1="53.34" x2="53.34" y2="53.34" width="0.1524" layer="91"/>
 <wire x1="63.5" y1="53.34" x2="63.5" y2="50.8" width="0.1524" layer="91"/>
 <junction x="63.5" y="53.34"/>
+<pinref part="R8" gate="G$1" pin="1"/>
+<wire x1="63.5" y1="55.88" x2="63.5" y2="53.34" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="ACC_PTT" class="0">
@@ -9337,12 +9354,12 @@ SINGLE-ENDED ANALOG INPUT/OUTPUT AND S/PDIF</description>
 </segment>
 <segment>
 <pinref part="R19" gate="G$1" pin="1"/>
-<wire x1="104.14" y1="83.82" x2="93.98" y2="83.82" width="0.1524" layer="91"/>
 <label x="81.28" y="84.328" size="1.27" layer="95"/>
-<pinref part="RN1" gate="G$1" pin="1A"/>
-<wire x1="93.98" y1="83.82" x2="81.28" y2="83.82" width="0.1524" layer="91"/>
-<wire x1="93.98" y1="96.52" x2="93.98" y2="83.82" width="0.1524" layer="91"/>
-<junction x="93.98" y="83.82"/>
+<wire x1="104.14" y1="83.82" x2="101.6" y2="83.82" width="0.1524" layer="91"/>
+<pinref part="RN1" gate="G$1" pin="4A"/>
+<wire x1="101.6" y1="83.82" x2="81.28" y2="83.82" width="0.1524" layer="91"/>
+<wire x1="101.6" y1="96.52" x2="101.6" y2="83.82" width="0.1524" layer="91"/>
+<junction x="101.6" y="83.82"/>
 </segment>
 </net>
 <net name="ACC_AUX" class="0">
@@ -9429,11 +9446,17 @@ SINGLE-ENDED ANALOG INPUT/OUTPUT AND S/PDIF</description>
 <junction x="99.06" y="119.38"/>
 <pinref part="P+8" gate="1" pin="+5V"/>
 <wire x1="96.52" y1="124.46" x2="96.52" y2="119.38" width="0.1524" layer="91"/>
+<pinref part="C31" gate="G$1" pin="1"/>
+<wire x1="101.6" y1="119.38" x2="109.22" y2="119.38" width="0.1524" layer="91"/>
+<junction x="101.6" y="119.38"/>
+<pinref part="C32" gate="G$1" pin="1"/>
+<wire x1="109.22" y1="119.38" x2="119.38" y2="119.38" width="0.1524" layer="91"/>
+<junction x="109.22" y="119.38"/>
 </segment>
 <segment>
 <pinref part="R8" gate="G$1" pin="2"/>
 <pinref part="P+10" gate="1" pin="+5V"/>
-<wire x1="63.5" y1="63.5" x2="63.5" y2="66.04" width="0.1524" layer="91"/>
+<wire x1="63.5" y1="68.58" x2="63.5" y2="66.04" width="0.1524" layer="91"/>
 </segment>
 </net>
 </nets>
