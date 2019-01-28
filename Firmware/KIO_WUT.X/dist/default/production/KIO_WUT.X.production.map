@@ -61,10 +61,10 @@ xc16-ld 1.36 (A)
 section                    address   length (PC units)   length (bytes) (dec)
 -------                    -------   -----------------   --------------------
 .text                        0x200               0x10a           0x18f  (399)
-.const                       0x30a                 0x8             0xc  (12)
-.text                        0x312                0x36            0x51  (81)
+.const                       0x30a                 0xa             0xf  (15)
+.text                        0x314                0xe8           0x15c  (348)
 
-                 Total "program" memory used (bytes):          0x1ec  (492) <1%
+                 Total "program" memory used (bytes):          0x2fa  (762) <1%
 
 
 "data" Memory  [Origin = 0x800, Length = 0x2000]
@@ -93,19 +93,25 @@ External Symbols in Program Memory (by address):
                   0x000252                  __data_init_da
                   0x000304                  __DefaultInterrupt
                   0x00030a                  _UART_BASE_ADDRESSES
-                  0x000312                  _foo
-                  0x00033c                  _main
+                  0x000312                  _OUTPUT_REG_BASE
+                  0x000314                  _unlock_config
+                  0x000326                  _lock_config
+                  0x000338                  _setup_uart
+                  0x0003ce                  _main
 
 External Symbols in Program Memory (by name):
 
+                  0x000312                  _OUTPUT_REG_BASE
                   0x00030a                  _UART_BASE_ADDRESSES
                   0x000304                  __DefaultInterrupt
                   0x000252                  __data_init
                   0x000252                  __data_init_da
                   0x00023c                  __psv_init
                   0x000200                  __resetPRI
-                  0x000312                  _foo
-                  0x00033c                  _main
+                  0x000326                  _lock_config
+                  0x0003ce                  _main
+                  0x000338                  _setup_uart
+                  0x000314                  _unlock_config
 
 Memory Configuration
 
@@ -187,30 +193,31 @@ __CONFIG1
 .comment
  *(.comment)
 
-.debug_info       0x000000        0x31e
+.debug_info       0x000000        0xbd6
  *(.debug_info)
- .debug_info      0x000000        0x12a build/default/production/main.o
- .debug_info      0x00012a        0x1f4 build/default/production/uart.o
+ .debug_info      0x000000        0x55b build/default/production/main.o
+ .debug_info      0x00055b        0x67b build/default/production/uart.o
  *(.gnu.linkonce.wi.*)
 
-.debug_abbrev     0x000000        0x126
+.debug_abbrev     0x000000        0x261
  *(.debug_abbrev)
- .debug_abbrev    0x000000         0x70 build/default/production/main.o
- .debug_abbrev    0x000070         0xb6 build/default/production/uart.o
+ .debug_abbrev    0x000000         0xf6 build/default/production/main.o
+ .debug_abbrev    0x0000f6        0x16b build/default/production/uart.o
 
-.debug_line       0x000000         0xd6
+.debug_line       0x000000        0x206
  *(.debug_line)
- .debug_line      0x000000         0x40 build/default/production/main.o
- .debug_line      0x000040         0x96 build/default/production/uart.o
+ .debug_line      0x000000         0xfa build/default/production/main.o
+ .debug_line      0x0000fa        0x10c build/default/production/uart.o
 
-.debug_frame      0x000000         0x60
+.debug_frame      0x000000         0x98
  *(.debug_frame)
  .debug_frame     0x000000         0x30 build/default/production/main.o
- .debug_frame     0x000030         0x30 build/default/production/uart.o
+ .debug_frame     0x000030         0x68 build/default/production/uart.o
 
-.debug_str        0x000000         0x14
+.debug_str        0x000000         0x39
  *(.debug_str)
- .debug_str       0x000000         0x14 build/default/production/uart.o
+ .debug_str       0x000000         0x14 build/default/production/main.o
+ .debug_str       0x000014         0x25 build/default/production/uart.o
 
 .debug_loc
  *(.debug_loc)
@@ -219,12 +226,12 @@ __CONFIG1
  *(.debug_macinfo)
 
 .debug_pubnames
-                  0x000000         0x4d
+                  0x000000         0x8a
  *(.debug_pubnames)
  .debug_pubnames
                   0x000000         0x1b build/default/production/main.o
  .debug_pubnames
-                  0x00001b         0x32 build/default/production/uart.o
+                  0x00001b         0x6f build/default/production/uart.o
 
 .debug_ranges
  *(.debug_ranges)
@@ -1502,29 +1509,39 @@ OUTPUT(dist/default/production/KIO_WUT.X.production.elf elf32-pic30)
 LOAD default_isr
 
 .debug_pubtypes
-                  0x000030         0x59
+                  0x000030         0xe4
  .debug_pubtypes
-                  0x000030         0x26 build/default/production/main.o
+                  0x000030         0x71 build/default/production/main.o
  .debug_pubtypes
-                  0x000056         0x33 build/default/production/uart.o
+                  0x0000a1         0x73 build/default/production/uart.o
 
 __c30_signature
-                  0x000089         0x18
+                  0x000114         0x18
  __c30_signature
-                  0x000089          0x6 build/default/production/main.o
+                  0x000114          0x6 build/default/production/main.o
  __c30_signature
-                  0x00008f          0x6 build/default/production/uart.o
+                  0x00011a          0x6 build/default/production/uart.o
  __c30_signature
-                  0x000095          0x6 c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\liblega-pic30-elf.a(crt0_extended24.o)
+                  0x000120          0x6 c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\liblega-pic30-elf.a(crt0_extended24.o)
  __c30_signature
-                  0x00009b          0x6 c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\liblega-pic30-elf.a(data_init_24.o)
+                  0x000126          0x6 c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\liblega-pic30-elf.a(data_init_24.o)
 
-.const              0x830a          0x8 load address 0x00030a  
- .const             0x830a          0x8 build/default/production/uart.o
+.config_JTAGEN    0x0157fe          0x2
+ .config_JTAGEN
+                  0x0157fe          0x2 build/default/production/main.o
+
+.config_IESO      0x0157fc          0x2
+ .config_IESO     0x0157fc          0x2 build/default/production/main.o
+
+.const              0x830a          0xa load address 0x00030a  
+ .const             0x830a          0xa build/default/production/uart.o
                     0x830a                  _UART_BASE_ADDRESSES
+                    0x8312                  _OUTPUT_REG_BASE
 
-.text             0x000312         0x36
- .text            0x000312         0x2a build/default/production/uart.o
-                  0x000312                  _foo
- .text            0x00033c          0xc build/default/production/main.o
-                  0x00033c                  _main
+.text             0x000314         0xe8
+ .text            0x000314         0xba build/default/production/uart.o
+                  0x000314                  _unlock_config
+                  0x000326                  _lock_config
+                  0x000338                  _setup_uart
+ .text            0x0003ce         0x2e build/default/production/main.o
+                  0x0003ce                  _main

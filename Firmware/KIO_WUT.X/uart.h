@@ -6,10 +6,8 @@
 #ifndef UART_H
 #define	UART_H
 
+#include<xc.h>
 
-
-// slightly unnecessary struct but means I can name UARTs rather
-// than remember which number they are
 typedef struct uart{
     int number; // Which number UART this is  
     int txPin; // Set to x to have UART TX on RPx
@@ -17,7 +15,10 @@ typedef struct uart{
     int baudrate; // Have a guess :) 
 }uart_t;
 
-int foo(uart_t x);
+
+void setup_uart(uart_t x);
+void lock_config();
+void unlock_config();
 
 #endif	// UART_H 
 
