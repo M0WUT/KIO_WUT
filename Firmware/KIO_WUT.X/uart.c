@@ -4,12 +4,8 @@
  *
  */
 
-
 #include "stdint.h"
 #include "uart.h"
-
-
-//Making UART library scalable across devices, likely I'll use it later
 
 // Address of first register of each UART's registers
 uint16_t *const UART_BASE_ADDRESSES[] = {
@@ -38,7 +34,7 @@ uint16_t *const OUTPUT_REG_BASE = (uint16_t*)0x03D6;
 #define OFFSET_WTCH 0x0A
 */
 
-void unlock_config(){
+static void unlock_config(){
     //I blindly copied these from datasheet
     asm volatile ("MOV #OSCCON, w1 \n"
         "MOV #0x46, w2 \n"
@@ -49,7 +45,7 @@ void unlock_config(){
     );
 }
 
-void lock_config(){
+static void lock_config(){
     //I blindly copied these from datasheet
     asm volatile ("MOV #OSCCON, w1 \n"
         "MOV #0x46, w2 \n"
@@ -76,16 +72,14 @@ void setup_uart(uart_t x){
         default: break;
     };
 
- 
-    //Two pins per register, higher pin number in <13:8>, lower pin in <5:0>
-    
-    uint16_t reg_offset = x.txPin >> 1; //clear LSB to give byte offset from base 
-    uint16_t high_low = x.txPin & 0x01; //adjusting higher or low pin number in reg
-    
+    //Setup TX Pin    
     //Function value for TX of each UART
     const uint16_t UART_TX_FUNCTION_VALUES[] = {3, 5, 19, 21};
     
-    //Setup TX Pin
+    //Two pins per register, higher pin number in <13:8>, lower pin in <5:0>    
+    uint16_t reg_offset = x.txPin >> 1; //divide by 2 to get offset from base 
+    uint16_t high_low = x.txPin & 0x01; //shows high or low pin in reg
+    
     //Clear the function bits for the pin used as TX
     *(OUTPUT_REG_BASE + reg_offset) &= (high_low ? 0xC0FF: 0xFFC0);
     //Set the function bits to the TX function for the chosen UART
@@ -93,7 +87,7 @@ void setup_uart(uart_t x){
     
     lock_config();
     
-    //Enable TX pin as output
+    //Set TX pin as output
     TRISB &= ~(1 << x.txPin);
     //Ensure RX pin is input
     TRISB |= (1 << x.rxPin);
