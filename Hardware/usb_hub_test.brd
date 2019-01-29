@@ -151,8 +151,8 @@
 <rectangle x1="66" y1="15.9" x2="67.4" y2="16.1" layer="42"/>
 <text x="39.35" y="25.75" size="1.016" layer="22" font="vector" rot="MR0">!MCLR</text>
 <text x="36.9" y="28.05" size="1.016" layer="22" font="vector" rot="MR0">GND</text>
-<text x="10.05" y="11.6" size="1.016" layer="21" font="vector" rot="R270" align="center-left">TX</text>
-<text x="12.59" y="11.6" size="1.016" layer="21" font="vector" rot="R270" align="center-left">RX</text>
+<text x="10.05" y="11.6" size="1.016" layer="21" font="vector" rot="R270" align="center-left">FROM P3</text>
+<text x="12.59" y="11.6" size="1.016" layer="21" font="vector" rot="R270" align="center-left">TO P3</text>
 <text x="15.13" y="11.6" size="1.016" layer="21" font="vector" rot="R270" align="center-left">GND</text>
 <text x="15.47" y="22.2" size="1.27" layer="21" font="vector" rot="R90" align="center-left">232_GND</text>
 <text x="18.01" y="22.2" size="1.27" layer="21" font="vector" rot="R90" align="center-left">232_DTR</text>

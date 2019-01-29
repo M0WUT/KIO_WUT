@@ -4,9 +4,16 @@ Tool Name:
   c:\program files (x86)\microchip\xc16\v1.36\bin\bin\..\bin/elf-ld.exe
 
 Command:
+  -TC:\\Users\\Dan\\AppData\\Local\\Temp\\tmp00001b60.00 \
+  -TC:\\Users\\Dan\\AppData\\Local\\Temp\\tmp00001b60.01 \
+  -TC:\\Users\\Dan\\AppData\\Local\\Temp\\tmp00001b60.02 \
+  -TC:\\Users\\Dan\\AppData\\Local\\Temp\\tmp00001b60.03 \
+  -TC:\\Users\\Dan\\AppData\\Local\\Temp\\tmp00001b60.04 \
+  -TC:\\Users\\Dan\\AppData\\Local\\Temp\\tmp00001b60.05 \
+  -TC:\\Users\\Dan\\AppData\\Local\\Temp\\tmp00001b60.06 \
   -p24FJ128GA202 \
   -o \
-  dist/default/production/KIO_WUT.X.production.elf \
+  dist/default/debug/KIO_WUT.X.debug.elf \
   -Lc:/program files (x86)/microchip/xc16/v1.36/bin/bin/.. \
   -Lc:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib \
   -Lc:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../support/PIC24E/gld \
@@ -16,11 +23,14 @@ Command:
   -Lc:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../support/dsPIC33C/gld \
   -Lc:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../support/dsPIC33E/gld \
   -Lc:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../support/dsPIC33F/gld \
-  build/default/production/main.o \
-  build/default/production/uart.o \
+  build/default/debug/main.o \
+  build/default/debug/uart.o \
   --local-stack \
   --defsym=__MPLAB_BUILD=1 \
-  -Tp24FJ128GA202.gld.00 \
+  --defsym=__MPLAB_DEBUG=1 \
+  --defsym=__DEBUG=1 \
+  --defsym=__MPLAB_DEBUGGER_PK3=1 \
+  -Tp24FJ128GA202.gld.07 \
   --stack=16 \
   --check-sections \
   --data-init \
@@ -32,10 +42,10 @@ Command:
   --stackguard=16 \
   --no-force-link \
   --smart-io \
-  -Map=dist/default/production/KIO_WUT.X.production.map \
+  -Map=dist/default/debug/KIO_WUT.X.debug.map \
   --report-mem \
   --memorysummary \
-  dist/default/production/memoryfile.xml \
+  dist/default/debug/memoryfile.xml \
   -start-group \
   --library=lega-pic30-elf \
   --library=m-elf \
@@ -53,7 +63,7 @@ c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\liblega-pic30-elf.
 c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\liblega-pic30-elf.a(crt_start_mode_normalda.Leo)
                               (__crt_start_mode_normal)
 c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\libm-elf.a(divsi3.daeo)
-                              build/default/production/uart.o (___divsi3)
+                              build/default/debug/uart.o (___divsi3)
 c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\libm-elf.a(udivsi3.daeo)
                               c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\libm-elf.a(divsi3.daeo) (___udivsi3)
 
@@ -66,17 +76,24 @@ section                    address   length (PC units)   length (bytes) (dec)
 -------                    -------   -----------------   --------------------
 .text                        0x200               0x148           0x1ec  (492)
 .const                       0x348                 0xa             0xf  (15)
-.text                        0x352               0x21e           0x32d  (813)
+.text                        0x352               0x1c6           0x2a9  (681)
 
-                 Total "program" memory used (bytes):          0x528  (1320) 1%
+                 Total "program" memory used (bytes):          0x4a4  (1188) <1%
 
 
 "data" Memory  [Origin = 0x800, Length = 0x2000]
 
 section                    address      alignment gaps    total length  (dec)
 -------                    -------      --------------    -------------------
+reserve_data_0x800           0x800                0x1c            0x1c  (28)
+reserve_data_0x81c           0x81c                 0x2             0x2  (2)
+reserve_data_0x81e           0x81e                 0x2             0x2  (2)
+reserve_data_0x820           0x820                 0x2             0x2  (2)
+reserve_data_0x822           0x822                 0x2             0x2  (2)
+reserve_data_0x824           0x824                 0x4             0x4  (4)
+reserve_data_0x82a           0x82a                0x26            0x26  (38)
 
-                 Total "data" memory used (bytes):              0  (0) 
+                 Total "data" memory used (bytes):           0x4e  (78) <1%
 
 
 Dynamic Memory Usage
@@ -84,9 +101,9 @@ Dynamic Memory Usage
 region                     address                      maximum length  (dec)
 ------                     -------                      ---------------------
 heap                             0                                   0  (0)
-stack                        0x800                              0x2000  (8192)
+stack                        0x850                              0x1fb0  (8112)
 
-                 Maximum dynamic memory (bytes):         0x2000  (8192)
+                 Maximum dynamic memory (bytes):         0x1fb0  (8112)
 
 
 External Symbols in Program Memory (by address):
@@ -138,9 +155,47 @@ CONFIG1          0x0157fe           0x000002
 
 Linker script and memory map
 
-LOAD build/default/production/main.o
-LOAD build/default/production/uart.o
+
+reserve_data_0x800
+                    0x0800         0x1c
+                    0x081c                  . = 0x1c
+ *fill*             0x0800         0x1c00
+
+reserve_data_0x81c
+                    0x081c          0x2
+                    0x081e                  . = 0x2
+ *fill*             0x081c          0x200
+
+reserve_data_0x81e
+                    0x081e          0x2
+                    0x0820                  . = 0x2
+ *fill*             0x081e          0x200
+
+reserve_data_0x820
+                    0x0820          0x2
+                    0x0822                  . = 0x2
+ *fill*             0x0820          0x200
+
+reserve_data_0x822
+                    0x0822          0x2
+                    0x0824                  . = 0x2
+ *fill*             0x0822          0x200
+
+reserve_data_0x824
+                    0x0824          0x4
+                    0x0828                  . = 0x4
+ *fill*             0x0824          0x400
+
+reserve_data_0x82a
+                    0x082a         0x26
+                    0x0850                  . = 0x26
+ *fill*             0x082a         0x2600
+LOAD build/default/debug/main.o
+LOAD build/default/debug/uart.o
                     0x0001                  __MPLAB_BUILD = 0x1
+                    0x0001                  __MPLAB_DEBUG = 0x1
+                    0x0001                  __DEBUG = 0x1
+                    0x0001                  __MPLAB_DEBUGGER_PK3 = 0x1
 LOAD pPIC24Fxxx
 LOAD c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\libfx-elf.a
                     0x157f8                  __CONFIG4 = 0x157f8
@@ -205,30 +260,30 @@ __CONFIG1
 .comment
  *(.comment)
 
-.debug_info       0x000000        0xb9f
+.debug_info       0x000000        0xad6
  *(.debug_info)
- .debug_info      0x000000        0x29d build/default/production/main.o
- .debug_info      0x00029d        0x902 build/default/production/uart.o
+ .debug_info      0x000000        0x1d4 build/default/debug/main.o
+ .debug_info      0x0001d4        0x902 build/default/debug/uart.o
  *(.gnu.linkonce.wi.*)
 
-.debug_abbrev     0x000000        0x1ed
+.debug_abbrev     0x000000        0x1ca
  *(.debug_abbrev)
- .debug_abbrev    0x000000         0x93 build/default/production/main.o
- .debug_abbrev    0x000093        0x15a build/default/production/uart.o
+ .debug_abbrev    0x000000         0x70 build/default/debug/main.o
+ .debug_abbrev    0x000070        0x15a build/default/debug/uart.o
 
-.debug_line       0x000000        0x21b
+.debug_line       0x000000        0x1b8
  *(.debug_line)
- .debug_line      0x000000        0x104 build/default/production/main.o
- .debug_line      0x000104        0x117 build/default/production/uart.o
+ .debug_line      0x000000         0xa1 build/default/debug/main.o
+ .debug_line      0x0000a1        0x117 build/default/debug/uart.o
 
 .debug_frame      0x000000         0x9e
  *(.debug_frame)
- .debug_frame     0x000000         0x30 build/default/production/main.o
- .debug_frame     0x000030         0x6e build/default/production/uart.o
+ .debug_frame     0x000000         0x30 build/default/debug/main.o
+ .debug_frame     0x000030         0x6e build/default/debug/uart.o
 
 .debug_str        0x000000         0x54
  *(.debug_str)
- .debug_str       0x000000         0x54 build/default/production/uart.o
+ .debug_str       0x000000         0x54 build/default/debug/uart.o
 
 .debug_loc
  *(.debug_loc)
@@ -240,9 +295,9 @@ __CONFIG1
                   0x000000         0x8a
  *(.debug_pubnames)
  .debug_pubnames
-                  0x000000         0x1b build/default/production/main.o
+                  0x000000         0x1b build/default/debug/main.o
  .debug_pubnames
-                  0x00001b         0x6f build/default/production/uart.o
+                  0x00001b         0x6f build/default/debug/uart.o
 
 .debug_ranges
  *(.debug_ranges)
@@ -250,9 +305,9 @@ __CONFIG1
 .debug_aranges    0x000000         0x30
  *(.debug_aranges)
  .debug_aranges
-                  0x000000         0x18 build/default/production/main.o
+                  0x000000         0x18 build/default/debug/main.o
  .debug_aranges
-                  0x000018         0x18 build/default/production/uart.o
+                  0x000018         0x18 build/default/debug/uart.o
                     0x0000                  WREG0 = 0x0
                     0x0000                  _WREG0 = 0x0
                     0x0002                  WREG1 = 0x2
@@ -1516,22 +1571,22 @@ LOAD c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\liblega-pic30
 LOAD c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\libm-elf.a
 LOAD c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\liblega-c-elf.a
 END GROUP
-OUTPUT(dist/default/production/KIO_WUT.X.production.elf elf32-pic30)
+OUTPUT(dist/default/debug/KIO_WUT.X.debug.elf elf32-pic30)
 LOAD default_isr
 
 .debug_pubtypes
                   0x000030         0xf2
  .debug_pubtypes
-                  0x000030         0x33 build/default/production/main.o
+                  0x000030         0x33 build/default/debug/main.o
  .debug_pubtypes
-                  0x000063         0xbf build/default/production/uart.o
+                  0x000063         0xbf build/default/debug/uart.o
 
 __c30_signature
                   0x000122         0x24
  __c30_signature
-                  0x000122          0x6 build/default/production/main.o
+                  0x000122          0x6 build/default/debug/main.o
  __c30_signature
-                  0x000128          0x6 build/default/production/uart.o
+                  0x000128          0x6 build/default/debug/uart.o
  __c30_signature
                   0x00012e          0x6 c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\liblega-pic30-elf.a(crt0_extended24.o)
  __c30_signature
@@ -1543,25 +1598,20 @@ __c30_signature
 
 .config_JTAGEN    0x0157fe          0x2
  .config_JTAGEN
-                  0x0157fe          0x2 build/default/production/main.o
+                  0x0157fe          0x2 build/default/debug/main.o
 
 .config_IESO      0x0157fc          0x2
- .config_IESO     0x0157fc          0x2 build/default/production/main.o
-
-.config_IOL1WAY
-                  0x0157f8          0x2
- .config_IOL1WAY
-                  0x0157f8          0x2 build/default/production/main.o
+ .config_IESO     0x0157fc          0x2 build/default/debug/main.o
 
 .const              0x8348          0xa load address 0x000348  
- .const             0x8348          0xa build/default/production/uart.o
+ .const             0x8348          0xa build/default/debug/uart.o
                     0x8348                  _UART_BASE_ADDRESSES
                     0x8350                  _OUTPUT_REG_BASE
 
-.text             0x000352        0x21e
- .text            0x000352        0x17e build/default/production/uart.o
+.text             0x000352        0x1c6
+ .text            0x000352        0x17e build/default/debug/uart.o
                   0x000352                  _unlock_config
                   0x000364                  _lock_config
                   0x000376                  _setup_uart
- .text            0x0004d0         0xa0 build/default/production/main.o
+ .text            0x0004d0         0x48 build/default/debug/main.o
                   0x0004d0                  _main

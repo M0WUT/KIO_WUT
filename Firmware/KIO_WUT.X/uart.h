@@ -9,10 +9,11 @@
 #include<xc.h>
 
 typedef struct uart{
-    int number; // Which number UART this is  
-    int txPin; // Set to x to have UART TX on RPx
-    int rxPin; // Set to x to have UART RX on RPx
-    int baudrate; // Have a guess :) 
+    uint16_t number; // Which number UART this is  
+    uint16_t txPin; // pin on port B to use as TX (N.B. only those that support PPS)
+    uint16_t rxPin; // pin on port B to use as TX (N.B. only those that support PPS)
+    uint16_t baudrate; // Have a guess :) 
+    uint16_t stopbits;
 }uart_t;
 
 

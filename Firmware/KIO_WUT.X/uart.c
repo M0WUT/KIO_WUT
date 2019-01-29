@@ -12,11 +12,11 @@
 //Making UART library scalable across devices, likely I'll use it later
 
 // Address of first register of each UART's registers
-uint16_t *const UART_BASE_ADDRESSES[] = { 
-    (uint16_t*)0x0500,
-    (uint16_t*)0x0516,
-    (uint16_t*)0x052C,
-    (uint16_t*)0x0538
+uint16_t *const UART_BASE_ADDRESSES[] = {
+    (uint16_t*) 0x0500,
+    (uint16_t*) 0x0516,
+    (uint16_t*) 0x052C,
+    (uint16_t*) 0x0538,
 };
 
 uint16_t *const OUTPUT_REG_BASE = (uint16_t*)0x03D6;
@@ -61,12 +61,10 @@ void lock_config(){
 }
 
 
-
 void setup_uart(uart_t x){
     
     unlock_config();
-   
-    /*
+
     //Setup RX pin
     switch(x.number)
     {
@@ -77,44 +75,36 @@ void setup_uart(uart_t x){
         case 4: RPINR27bits.U4RXR = x.rxPin; break;
         default: break;
     };
-    */
-    
 
-    
-    //Setup TX pin
+ 
     //Two pins per register, higher pin number in <13:8>, lower pin in <5:0>
     
-    int reg_offset = x.txPin >> 1; //clear LSB to give byte offset from base 
-    int high_low = x.txPin & 0x01; //adjusting higher or low pin number in reg?
+    uint16_t reg_offset = x.txPin >> 1; //clear LSB to give byte offset from base 
+    uint16_t high_low = x.txPin & 0x01; //adjusting higher or low pin number in reg
     
     //Function value for TX of each UART
     const uint16_t UART_TX_FUNCTION_VALUES[] = {3, 5, 19, 21};
     
-    
+    //Setup TX Pin
     //Clear the function bits for the pin used as TX
-    //RPOR7 &= (high_low ? 0xC0FF : 0xFFC0);
-    //Set the function bits to the TX function for the chosen UART
     *(OUTPUT_REG_BASE + reg_offset) &= (high_low ? 0xC0FF: 0xFFC0);
+    //Set the function bits to the TX function for the chosen UART
     *(OUTPUT_REG_BASE + reg_offset) |= UART_TX_FUNCTION_VALUES[x.number - 1] << (high_low ? 8 : 0);
     
     lock_config();
     
+    //Enable TX pin as output
+    TRISB &= ~(1 << x.txPin);
+    //Ensure RX pin is input
+    TRISB |= (1 << x.rxPin);
     
-
+    //Base register for this UART (mostly to save typing!)
+    uint16_t *breg = UART_BASE_ADDRESSES[x.number - 1];
+    *(breg + OFFSET_BRG) = 1000000 / x.baudrate - 1; // Eqn 18.2 in datasheet
     
     //Yes I know hard coded constants are bad but whatever...
-    U1MODEbits.STSEL = 0; // 1-stop bit
-    U1MODEbits.PDSEL = 0; // No parity, 8-data bits
-    U1MODEbits.ABAUD = 0; // Auto-Baud disables
-    U1MODEbits.BRGH = 1; // high speed mode
-    U1BRG = 25;
-
-    U1MODEbits.UARTEN = 1; // enable UART
-    U1STAbits.UTXEN = 1; // enable UART TX
-    U1STAbits.URXEN = 1; // enable UART TX
-    
- 
-
+    *(breg + OFFSET_MODE) = (1<<15) | (1<<3) | (x.stopbits == 2); // UART Enabled | High Baud Rate
+    *(breg + OFFSET_STATUS) = (1<<12) | (1<<10); // RX Enable | Tx Enable
 }
 
 
