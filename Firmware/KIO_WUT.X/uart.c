@@ -58,7 +58,7 @@ static void lock_config(){
 
 
 void setup_uart(uart_t x){
-    
+
     unlock_config();
 
     //Setup RX pin
@@ -72,6 +72,9 @@ void setup_uart(uart_t x){
         default: break;
     };
 
+    // Disable all ADCs as it overrides UART RX
+    ANSB = 0;
+    
     //Setup TX Pin    
     //Function value for TX of each UART
     const uint16_t UART_TX_FUNCTION_VALUES[] = {3, 5, 19, 21};
@@ -101,6 +104,22 @@ void setup_uart(uart_t x){
     *(breg + OFFSET_STATUS) = (1<<12) | (1<<10); // RX Enable | Tx Enable
 }
 
+
+char rx_char(uart_t x){
+    uint16_t *breg = UART_BASE_ADDRESSES[x.number - 1];
+
+    // RX Data Available is LSB of Status reg
+    if(*(breg + OFFSET_STATUS) & 0x01){
+        return *(breg + OFFSET_RX);
+    }
+    else
+        return 0;
+}
+
+void tx_char(uart_t x, char a){
+    uint16_t *breg = UART_BASE_ADDRESSES[x.number - 1];
+    *(breg + OFFSET_TX) = a;
+}
 
 
 

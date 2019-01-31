@@ -12,6 +12,8 @@
 
 #include "uart.h"
 
+#define LOOPBACK
+
 int main(void) {
        
     uart_t CAT = (uart_t){.number=1, .txPin =8, .rxPin=9, .baudrate=38400, .stopbits=1};
@@ -24,12 +26,31 @@ int main(void) {
     setup_uart(K3);
     setup_uart(P3);
  
+
+#ifdef LOOPBACK
+    char x;
     while(1){
-        U1TXREG = '1';
-        U2TXREG = '2';
-        U3TXREG = '3';
-        U4TXREG = '4';
-        int i = 0;
-        while(++i < 0xFFFF);
+        
+
+        x = rx_char(CAT);
+        if(x)
+            tx_char(CAT, x);
+        
+        x = rx_char(WK);
+        if(x)
+            tx_char(WK, x);
+        
+        x = rx_char(K3);
+        if(x)
+            tx_char(K3, x);
+        
+        x = rx_char(P3);
+        if(x)
+            tx_char(P3, x);
+
+
     }
+#endif // ifdef LOOPBACK
 }
+
+
