@@ -57,18 +57,21 @@ static void lock_config(){
 }
 
 
-void setup_uart(uart_t x){
+void setup_uart(uart_t *x){
 
+    (*x).charToTx = 0;
+    (*x).charRcvd = 0;
+    
     unlock_config();
 
     //Setup RX pin
-    switch(x.number)
+    switch((*x).number)
     {
         //These are seemingly random in memory so have to be specific for each
-        case 1: RPINR18bits.U1RXR = x.rxPin; break;
-        case 2: RPINR19bits.U2RXR = x.rxPin; break;
-        case 3: RPINR17bits.U3RXR = x.rxPin; break;
-        case 4: RPINR27bits.U4RXR = x.rxPin; break;
+        case 1: RPINR18bits.U1RXR = (*x).rxPin; break;
+        case 2: RPINR19bits.U2RXR = (*x).rxPin; break;
+        case 3: RPINR17bits.U3RXR = (*x).rxPin; break;
+        case 4: RPINR27bits.U4RXR = (*x).rxPin; break;
         default: break;
     };
 
@@ -80,46 +83,63 @@ void setup_uart(uart_t x){
     const uint16_t UART_TX_FUNCTION_VALUES[] = {3, 5, 19, 21};
     
     //Two pins per register, higher pin number in <13:8>, lower pin in <5:0>    
-    uint16_t reg_offset = x.txPin >> 1; //divide by 2 to get offset from base 
-    uint16_t high_low = x.txPin & 0x01; //shows high or low pin in reg
+    uint16_t reg_offset = (*x).txPin >> 1; //divide by 2 to get offset from base 
+    uint16_t high_low = (*x).txPin & 0x01; //shows high or low pin in reg
     
     //Clear the function bits for the pin used as TX
     *(OUTPUT_REG_BASE + reg_offset) &= (high_low ? 0xC0FF: 0xFFC0);
     //Set the function bits to the TX function for the chosen UART
-    *(OUTPUT_REG_BASE + reg_offset) |= UART_TX_FUNCTION_VALUES[x.number - 1] << (high_low ? 8 : 0);
+    *(OUTPUT_REG_BASE + reg_offset) |= UART_TX_FUNCTION_VALUES[(*x).number - 1] << (high_low ? 8 : 0);
     
     lock_config();
     
     //Set TX pin as output
-    TRISB &= ~(1 << x.txPin);
+    TRISB &= ~(1 << (*x).txPin);
     //Ensure RX pin is input
-    TRISB |= (1 << x.rxPin);
+    TRISB |= (1 << (*x).rxPin);
     
     //Base register for this UART (mostly to save typing!)
-    uint16_t *breg = UART_BASE_ADDRESSES[x.number - 1];
-    *(breg + OFFSET_BRG) = 1000000 / x.baudrate - 1; // Eqn 18.2 in datasheet
+    (*x).breg = UART_BASE_ADDRESSES[(*x).number - 1];
+    *((*x).breg + OFFSET_BRG) = 1000000 / (*x).baudrate - 1; // Eqn 18.2 in datasheet
     
     //Yes I know hard coded constants are bad but whatever...
-    *(breg + OFFSET_MODE) = (1<<15) | (1<<3) | (x.stopbits == 2); // UART Enabled | High Baud Rate
-    *(breg + OFFSET_STATUS) = (1<<12) | (1<<10); // RX Enable | Tx Enable
+    *((*x).breg + OFFSET_MODE) = (1<<15) | (1<<3) | ((*x).stopbits == 2); // UART Enabled | High Baud Rate
+    *((*x).breg + OFFSET_STATUS) = (1<<12) | (1<<10); // RX Enable | Tx Enable
 }
 
-
-char rx_char(uart_t x){
-    uint16_t *breg = UART_BASE_ADDRESSES[x.number - 1];
-
-    // RX Data Available is LSB of Status reg
-    if(*(breg + OFFSET_STATUS) & 0x01){
-        return *(breg + OFFSET_RX);
+void add_to_tx_buffer(uart_t *x, char *a, uint16_t length){
+    if ((*x).charToTx + length <= BUFFER_SIZE){
+        uint16_t i = 0;
+        for(i = 0; i < length; i++){
+            (*x).txBuffer[(*x).charToTx++] = *(a+i);
+        }
     }
-    else
-        return 0;
+    //If it doesn't fit in buffer, drop it
 }
 
-void tx_char(uart_t x, char a){
-    uint16_t *breg = UART_BASE_ADDRESSES[x.number - 1];
-    *(breg + OFFSET_TX) = a;
+void handle_tx(uart_t *x){
+    // While we have something to TX and the TX shift register is not full
+    while(((*x).charToTx) && (((*((*x).breg + OFFSET_STATUS)) & (1<<9)) == 0)){
+        *((*x).breg + OFFSET_TX) = (*x).txBuffer[0]; // Add char
+        (*x).charToTx--; // One fewer char to TX
+        uint16_t i = 1;
+        //Shuffle FIFO down 1 bit
+        for(i = 1; i < BUFFER_SIZE; i++)
+            (*x).txBuffer[i - 1] = (*x).txBuffer[i];
+    }
 }
 
-
-
+uint16_t handle_rx(uart_t *x){
+    // All CAT Commands are terminated with a semicolon (;))
+    // This loads received chars into RX buffer then returns buffer length
+    // If no character received / not end of message, returns 0
+    if(*((*x).breg + OFFSET_STATUS) & 0x01){
+        //We have received something
+        (*x).rxBuffer[(*x).charRcvd++] = *((*x).breg + OFFSET_RX);
+        if((*x).rxBuffer[(*x).charRcvd - 1] == ';'){
+            //Message complete
+            return (*x).charRcvd;
+        }
+    }
+    return 0;
+}
