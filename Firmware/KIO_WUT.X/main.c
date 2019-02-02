@@ -11,11 +11,7 @@
 #pragma config IOL1WAY = OFF
 
 #include "uart.h"
-
-#define MODE NORMAL
-
-#define NORMAL 0
-#define LOOPBACK 1
+#include "wk.h"
 
 char catRxBuffer[10];
 char catTxBuffer[50];
@@ -29,6 +25,7 @@ char k3TxBuffer[50];
 char p3RxBuffer[10];
 char p3TxBuffer[50];
 
+char k3WkBuffer[4];
 uint16_t wk_bytesToRx = 0;
 
 
@@ -45,7 +42,8 @@ int main(void) {
     setup_uart(&P3);
  
     uint16_t x;
-#if MODE == NORMAL
+    uint16_t wk_charRcvd = 0;
+
     while(1){
       
         // Ignoring the Winkey, messages between the other 3 ports are simply forwarded
@@ -54,8 +52,11 @@ int main(void) {
         // CAT          K3
         // P3           K3
         // K3           CAT, P3
+        // Messages to the Winkey are either automatically responded to (which 
+        // may include ignoring them) or forwarded on only to the K3 after 
+        //converting to CAT commands
         
-        x = handle_rx(&CAT);
+        x = handle_rx(&CAT); // x contains length of message from CAT
         if(x)
         {
             add_to_tx_buffer(&K3, CAT.rxBuffer, x);          
@@ -77,33 +78,19 @@ int main(void) {
             K3.charRcvd = 0;
         }
         
+        // WK is not ; terminated so still use handle_rx to process but always check the message
+        handle_rx(&WK);
+        if(WK.charRcvd != wk_charRcvd){ // Another char received since last time
+            uint16_t responseLength = handle_wk(&WK, k3WkBuffer);
+            if(responseLength)
+                add_to_tx_buffer(&K3, k3WkBuffer, responseLength);
+            
+            wk_charRcvd = WK.charRcvd;
+        }
         
         handle_tx(&CAT);
         handle_tx(&WK);
         handle_tx(&K3);
         handle_tx(&P3);
-
     }
-
-#elif MODE == LOOPBACK
-    while(1){
-        if (rx_char(&CAT))
-            tx_char(&CAT, CAT.rxChar);
-        
-        if (rx_char(&WK))
-            tx_char(&WK, WK.rxChar);
-        
-        if (rx_char(&K3))
-            tx_char(&K3, K3.rxChar);
-        
-        if (rx_char(&P3))
-            tx_char(&P3, P3.rxChar);
-    }
-#endif
-    
-
-    
-  
 }
-
-

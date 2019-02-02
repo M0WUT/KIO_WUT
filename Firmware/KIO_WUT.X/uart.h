@@ -26,7 +26,7 @@ typedef struct uart{
 
 
 void setup_uart(uart_t *x);
-void add_to_tx_buffer(uart_t *x, char *a, uint16_t length); // Adds string to TX buffer
+void add_to_tx_buffer(uart_t *x, char *a, uint16_t length); // Adds string to TX FIFO
 void handle_tx (uart_t *x);
 uint16_t handle_rx (uart_t *x);
 
