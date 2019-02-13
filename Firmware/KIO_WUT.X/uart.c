@@ -103,8 +103,8 @@ void setup_uart(uart_t *x){
     *((*x).breg + OFFSET_BRG) = 1000000 / (*x).baudrate - 1; // Eqn 18.2 in datasheet
     
     //Yes I know hard coded constants are bad but whatever...
-    *((*x).breg + OFFSET_MODE) = (1<<15) | (1<<3) | ((*x).stopbits == 2); // UART Enabled | High Baud Rate
-    *((*x).breg + OFFSET_STATUS) = (1<<12) | (1<<10); // RX Enable | Tx Enable
+    *((*x).breg + OFFSET_MODE) = (1<<15) | (1<<3) | ((*x).stopbits == 2) | (((*x).inverted & 0x01) << 4); // UART Enabled | High Baud Rate
+    *((*x).breg + OFFSET_STATUS) = (1<<12) | (1<<10) | ((*x).inverted << 14); // RX Enable | Tx Enable
 }
 
 void add_to_tx_buffer(uart_t *x, char *a, uint16_t length){

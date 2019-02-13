@@ -31,10 +31,41 @@ uint16_t wk_bytesToRx = 0;
 
 int main(void) {
        
-    uart_t CAT = (uart_t){.number=1, .txPin =8, .rxPin=9, .baudrate=38400, .stopbits=1};
-    uart_t WK = (uart_t){.number=2, .txPin =14, .rxPin=15, .baudrate=1200, .stopbits=2};
-    uart_t K3 = (uart_t){.number=3, .txPin =1, .rxPin=0, .baudrate=38400, .stopbits=1};
-    uart_t P3 = (uart_t){.number=4, .txPin =3, .rxPin=2, .baudrate=38400, .stopbits=1};
+    uart_t CAT = (uart_t){
+        .number=1,
+        .txPin =8,
+        .rxPin=9,
+        .baudrate=38400,
+        .stopbits=1,
+        .inverted=0
+    };
+        
+    uart_t WK = (uart_t){
+        .number=2,
+        .txPin =14,
+        .rxPin=15,
+        .baudrate=1200,
+        .stopbits=2,
+        .inverted=0
+    };
+    
+    uart_t K3 = (uart_t){
+        .number=3,
+        .txPin =1,
+        .rxPin=0,
+        .baudrate=38400,
+        .stopbits=1,
+        .inverted=0
+    };
+    
+    uart_t P3 = (uart_t){
+        .number=4,
+        .txPin =3,
+        .rxPin=2,
+        .baudrate=38400,
+        .stopbits=1,
+        .inverted=1
+    };
 
     setup_uart(&CAT);
     setup_uart(&WK);
@@ -59,7 +90,8 @@ int main(void) {
         x = handle_rx(&CAT); // x contains length of message from CAT
         if(x)
         {
-            add_to_tx_buffer(&K3, CAT.rxBuffer, x);          
+            add_to_tx_buffer(&K3, CAT.rxBuffer, x);   
+            add_to_tx_buffer(&P3, CAT.rxBuffer, x);    //DEBUG
             CAT.charRcvd = 0;
         }
         

@@ -16,6 +16,7 @@ typedef struct uart{
     uint16_t rxPin; // pin on port B to use as TX (N.B. only those that support PPS)
     uint32_t baudrate; // Have a guess :) 
     uint16_t stopbits;
+    uint16_t inverted;
     uint16_t *breg; // Base address for UART's config registers, just to save recalculating every time
     char rxBuffer[BUFFER_SIZE];
     char txBuffer[BUFFER_SIZE];
