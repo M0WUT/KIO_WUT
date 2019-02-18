@@ -1686,10 +1686,10 @@ Source: &lt;a href="http://www.ftdichip.com/Support/Documents/DataSheets/ICs/DS_
 <circle x="-2.332" y="2.332" radius="0.359209375" width="0" layer="21"/>
 <rectangle x1="-2" y1="-2" x2="2" y2="2" layer="39"/>
 <rectangle x1="-0.9525" y1="-0.9525" x2="0.9525" y2="0.9525" layer="41"/>
-<pad name="P$1" x="-0.6" y="-0.6" drill="0.4" diameter="0.6096"/>
-<pad name="P$2" x="0.6" y="-0.6" drill="0.4" diameter="0.6096"/>
-<pad name="P$3" x="0.6" y="0.6" drill="0.4" diameter="0.6096"/>
-<pad name="P$4" x="-0.6" y="0.6" drill="0.4" diameter="0.6096"/>
+<pad name="P$1" x="-0.6" y="-0.6" drill="0.4" diameter="0.6096" stop="no"/>
+<pad name="P$2" x="0.6" y="-0.6" drill="0.4" diameter="0.6096" stop="no"/>
+<pad name="P$3" x="0.6" y="0.6" drill="0.4" diameter="0.6096" stop="no"/>
+<pad name="P$4" x="-0.6" y="0.6" drill="0.4" diameter="0.6096" stop="no"/>
 </package>
 </packages>
 </library>

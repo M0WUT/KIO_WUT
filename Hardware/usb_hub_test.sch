@@ -1632,7 +1632,7 @@ Farnell: 2293881</description>
 <symbol name="+5V">
 <wire x1="1.27" y1="-1.905" x2="0" y2="0" width="0.254" layer="94"/>
 <wire x1="0" y1="0" x2="-1.27" y2="-1.905" width="0.254" layer="94"/>
-<text x="-2.54" y="-5.08" size="1.778" layer="96" rot="R90">&gt;VALUE</text>
+<text x="0" y="2.54" size="1.778" layer="96" rot="R180" align="center">&gt;VALUE</text>
 <pin name="+5V" x="0" y="-2.54" visible="off" length="short" direction="sup" rot="R90"/>
 </symbol>
 <symbol name="+3V3">
@@ -7753,10 +7753,10 @@ Source: &lt;a href="http://www.ftdichip.com/Support/Documents/DataSheets/ICs/DS_
 <circle x="-2.332" y="2.332" radius="0.359209375" width="0" layer="21"/>
 <rectangle x1="-2" y1="-2" x2="2" y2="2" layer="39"/>
 <rectangle x1="-0.9525" y1="-0.9525" x2="0.9525" y2="0.9525" layer="41"/>
-<pad name="P$1" x="-0.6" y="-0.6" drill="0.4" diameter="0.6096"/>
-<pad name="P$2" x="0.6" y="-0.6" drill="0.4" diameter="0.6096"/>
-<pad name="P$3" x="0.6" y="0.6" drill="0.4" diameter="0.6096"/>
-<pad name="P$4" x="-0.6" y="0.6" drill="0.4" diameter="0.6096"/>
+<pad name="P$1" x="-0.6" y="-0.6" drill="0.4" diameter="0.6096" stop="no"/>
+<pad name="P$2" x="0.6" y="-0.6" drill="0.4" diameter="0.6096" stop="no"/>
+<pad name="P$3" x="0.6" y="0.6" drill="0.4" diameter="0.6096" stop="no"/>
+<pad name="P$4" x="-0.6" y="0.6" drill="0.4" diameter="0.6096" stop="no"/>
 </package>
 </packages>
 <symbols>
