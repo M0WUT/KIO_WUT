@@ -25,7 +25,7 @@ char k3TxBuffer[50];
 char p3RxBuffer[10];
 char p3TxBuffer[50];
 
-char k3WkBuffer[4];
+char k3WkBuffer[5];
 uint16_t wk_bytesToRx = 0;
 
 

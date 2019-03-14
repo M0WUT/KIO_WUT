@@ -8160,7 +8160,7 @@ In this library the device names are the same as the pin names of the symbols, t
 <part name="GND9" library="supply1" deviceset="GND" device=""/>
 <part name="GND13" library="supply1" deviceset="GND" device=""/>
 <part name="GND14" library="supply1" deviceset="GND" device=""/>
-<part name="RN2" library="m0wut" deviceset="R_BOURNS_CAY16-J4" device="" value="27"/>
+<part name="RN2" library="m0wut" deviceset="R_BOURNS_CAY16-J4" device="" value="15k"/>
 <part name="C6" library="rcl" deviceset="C-EU" device="C0402" value="100nF"/>
 <part name="C7" library="rcl" deviceset="C-EU" device="C0402" value="100nF"/>
 <part name="R3" library="rcl" deviceset="R-EU_" device="R0402" value="27"/>
@@ -8171,7 +8171,7 @@ In this library the device names are the same as the pin names of the symbols, t
 <part name="R10" library="rcl" deviceset="R-EU_" device="R0402" value="27"/>
 <part name="R11" library="rcl" deviceset="R-EU_" device="R0402" value="27"/>
 <part name="R12" library="rcl" deviceset="R-EU_" device="R0402" value="27"/>
-<part name="RN1" library="m0wut" deviceset="R_BOURNS_CAY16-J4" device="" value="27"/>
+<part name="RN1" library="m0wut" deviceset="R_BOURNS_CAY16-J4" device="" value="15k"/>
 <part name="GND8" library="supply1" deviceset="GND" device=""/>
 <part name="Q1" library="adafruit" deviceset="MOSFET-N" device="REFLOW"/>
 <part name="GND34" library="supply1" deviceset="GND" device=""/>
@@ -8217,7 +8217,7 @@ In this library the device names are the same as the pin names of the symbols, t
 <part name="L6" library="m0wut" deviceset="INDUCTOR" device=""/>
 <part name="SUPPLY6" library="supply2" deviceset="AGND" device=""/>
 <part name="SUPPLY7" library="supply2" deviceset="AGND" device=""/>
-<part name="L4" library="m0wut" deviceset="INDUCTOR" device=""/>
+<part name="L4" library="m0wut" deviceset="INDUCTOR" device="" value="100uH"/>
 </parts>
 <sheets>
 <sheet>

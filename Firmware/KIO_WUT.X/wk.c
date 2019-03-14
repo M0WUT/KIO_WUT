@@ -118,9 +118,10 @@ uint16_t handle_wk(uart_t *x, char* response){
             add_to_tx_buffer(x, (*x).rxBuffer, 1);
             response[0] = 'K';
             response[1] = 'Y';
-            response[2] = (*x).rxBuffer[0];
-            response[3] = ';';
-            responseLength = 4;
+            response[2] = ' ';
+            response[3] = (*x).rxBuffer[0];
+            response[4] = ';';
+            responseLength = 5;
             clear_buffer(x, 1);
             break;
     };
