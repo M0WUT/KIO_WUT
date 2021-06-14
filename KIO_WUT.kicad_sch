@@ -4702,12 +4702,6 @@
     (path "/f0ff5783-23c7-4bed-9111-970cbbb47c17/9d56f9d3-471e-4b32-8cb4-c0bdee1d5445"
       (reference "#PWR042") (unit 1) (value "GND") (footprint "")
     )
-    (path "/f0ff5783-23c7-4bed-9111-970cbbb47c17/a37230d3-85ac-48b4-91e9-e75d3f845c9d"
-      (reference "#PWR043") (unit 1) (value "+3.3V") (footprint "")
-    )
-    (path "/f0ff5783-23c7-4bed-9111-970cbbb47c17/0e87ba68-5cc7-4ecc-b58f-8bcf6b184e15"
-      (reference "#PWR044") (unit 1) (value "+3.3V") (footprint "")
-    )
     (path "/f0ff5783-23c7-4bed-9111-970cbbb47c17/5c63d0fb-48cb-4282-bc06-a211cdad1978"
       (reference "#PWR045") (unit 1) (value "+3.3V") (footprint "")
     )
@@ -4852,12 +4846,6 @@
     (path "/9bcceb0f-4be2-411a-ad11-546d8bfe4a11"
       (reference "D1") (unit 1) (value "USBLC6-2M6") (footprint "Diode_WUT:TVS_ST_USBLC6-2M6")
     )
-    (path "/f0ff5783-23c7-4bed-9111-970cbbb47c17/29a0075d-fdf9-4d81-b2e7-058f3e7523b3"
-      (reference "D2") (unit 1) (value "KPT-1608SURCK ") (footprint "LED_SMD:LED_0603_1608Metric")
-    )
-    (path "/f0ff5783-23c7-4bed-9111-970cbbb47c17/876eb337-6017-47f2-b5b1-6589eca32bc9"
-      (reference "D3") (unit 1) (value "KPT-1608SURCK ") (footprint "LED_SMD:LED_0603_1608Metric")
-    )
     (path "/f0ff5783-23c7-4bed-9111-970cbbb47c17/f0e06acb-22c0-4bf9-89b0-5dcae11b4b74"
       (reference "D4") (unit 1) (value "ESD5B5.0ST1G") (footprint "Diode_SMD:D_SOD-523")
     )
@@ -4962,12 +4950,6 @@
     )
     (path "/f0ff5783-23c7-4bed-9111-970cbbb47c17/ef284c23-87db-4bf4-81bf-948fc4668f4a"
       (reference "R16") (unit 1) (value "12k") (footprint "Resistor_SMD:R_0402_1005Metric")
-    )
-    (path "/f0ff5783-23c7-4bed-9111-970cbbb47c17/4eaee787-0766-4c18-a510-6462560def3b"
-      (reference "R17") (unit 1) (value "1k") (footprint "Resistor_SMD:R_0402_1005Metric")
-    )
-    (path "/f0ff5783-23c7-4bed-9111-970cbbb47c17/2b4bb770-9481-42ff-bbbb-bfd83ce2d111"
-      (reference "R18") (unit 1) (value "1k") (footprint "Resistor_SMD:R_0402_1005Metric")
     )
     (path "/f0ff5783-23c7-4bed-9111-970cbbb47c17/9bb51280-4118-4bf4-8878-d6adb684a26d"
       (reference "R19") (unit 1) (value "10k") (footprint "Resistor_SMD:R_0402_1005Metric")
